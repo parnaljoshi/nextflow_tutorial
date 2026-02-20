@@ -1,6 +1,6 @@
 nextflow.enable.dsl=2
 
-params.query_fasta = "query.fasta"
+params.query_fasta = "data/query.fasta"
 params.db_query    = "reviewed:true%20AND%20organism_id:559292"   // reviewed yeast proteins
 params.outdir      = "results"
 
