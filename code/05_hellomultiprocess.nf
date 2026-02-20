@@ -1,3 +1,5 @@
+nextflow.enable.dsl=2
+
 process WRITE_TO_FILE {
 
 	output:
