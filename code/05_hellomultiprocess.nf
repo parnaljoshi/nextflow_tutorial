@@ -17,7 +17,7 @@ process PYTHON_HELLO {
 
 	script:
 	"""
-	#!/usr/bin/pytho
+	#!/usr/bin/python
 	print("Hello World from Process 2 (Python)")
 	"""
 }
