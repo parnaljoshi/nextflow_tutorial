@@ -208,6 +208,62 @@ rm -rf work/
 nextflow clean -f
 ```
 
+### Performance Comparison: Nextflow vs Bash
+
+To compare execution times between Nextflow and traditional bash scripts, you can use the `time` command:
+
+#### Timing the Bash Script (06_blast.sh)
+```bash
+
+# Time the bash script execution
+time ./code/06_blast.sh
+```
+
+#### Timing the Nextflow Pipeline (06_blast.nf)
+```bash
+# Time the Nextflow pipeline
+time nextflow run code/06_blast.nf -profile hpc_modules
+
+# For subsequent runs (using cache)
+time nextflow run code/06_blast.nf -profile hpc_modules -resume
+```
+
+#### Timing Output Explained
+The `time` command shows three values:
+- **real** - Total wall clock time (actual elapsed time)
+- **user** - CPU time spent in user mode
+- **sys** - CPU time spent in kernel mode
+
+#### Example Comparison
+```bash
+# Clean run (no cached results)
+rm -rf work/ work_bash/ results/
+
+# Run bash version
+echo "=== Bash Script ==="
+time ./code/06_blast.sh
+
+# Run Nextflow version
+echo "=== Nextflow Pipeline ==="
+time nextflow run code/06_blast.nf -profile hpc_modules
+```
+
+**Key Observations:**
+- **First run**: Nextflow has overhead for workflow management
+- **Cached runs**: Nextflow's `-resume` skips completed steps (huge time saver!)
+- **Parallel workflows** (07_blastparallel.nf): Nextflow shows real advantage with parallelization
+- **Reproducibility**: Nextflow tracks all intermediate steps automatically
+
+#### Timing Parallel Execution
+```bash
+# Compare sequential vs parallel BLAST
+echo "=== Sequential (06_blast.nf) ==="
+time nextflow run code/06_blast.nf -profile hpc_modules
+
+echo "=== Parallel (07_blastparallel.nf) ==="
+time nextflow run code/07_blastparallel.nf -profile hpc_modules --chunkSize 5
+```
+
 ## Project Structure
 
 ```
@@ -220,13 +276,15 @@ nextflow_tutorial/
 │   ├── 03_hellofile.nf         # Publishing results
 │   ├── 04_hellopython.nf       # Python integration
 │   ├── 05_hellomultiprocess.nf # Multiple processes
-│   ├── 06_blast.nf             # BLAST pipeline
+│   ├── 06_blast.nf             # BLAST pipeline (Nextflow)
+│   ├── 06_blast.sh             # BLAST pipeline (bash - for comparison)
 │   └── 07_blastparallel.nf     # Parallel BLAST
 ├── data/                        # Input data
 │   └── query.fasta             # Query sequences
 ├── output/                      # Simple example outputs
 ├── results/                     # BLAST results
-└── work/                        # Nextflow working directory
+├── work/                        # Nextflow working directory
+└── work_bash/                   # Bash script working directory
 ```
 
 ## Configuration Profiles
