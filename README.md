@@ -338,6 +338,7 @@ nextflow run code/01_hello.nf -profile local
 - [nf-core](https://nf-co.re/) - Community curated pipelines
 
 ### Learning Resources
+- [ISU Nextflow Tutorial](https://github.com/ISUgenomics/isu-nextflow-workshop)
 - [Nextflow Training](https://training.nextflow.io/)
 - [Seqera Labs YouTube](https://www.youtube.com/@seqeralabs)
 
